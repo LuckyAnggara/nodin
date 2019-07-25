@@ -17,13 +17,6 @@ $table->addRow();
 $cell = $table->addCell(4500);
 $textrun = $cell->addTextRun();
 $textrun->addText('This is the header with ');
-$textrun->addLink('https://github.com/PHPOffice/PHPWord', 'PHPWord on GitHub');
-$table->addCell(4500)->addImage('assets\images\logo kemenkumham.png', array('width' => 80, 'height' => 80, 'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::END));
-// Add header for all other pages
-$subsequent = $section->addHeader();
-$subsequent->addText('Subsequent pages in Section 1 will Have this!');
-$subsequent->addImage('assets\images\logo kemenkumham.png', array('width' => 80, 'height' => 80));
-
 // Write some text
 $section->addTextBreak();
 $section->addText('Sunt sunt irure ad adipisicing mollit. Fugiat dolore ut in cillum proident sunt commodo velit voluptate dolore consequat. Id officia minim amet sunt deserunt ad deserunt dolor ullamco irure amet eiusmod elit. Magna nulla duis culpa ipsum in.
