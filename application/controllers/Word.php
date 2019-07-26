@@ -37,6 +37,18 @@ class Word extends CI_Controller {
 																'spacing'=> 1,25,
 																'spaceAfter' => 0)
 															);
+		$multipleTabsStyleName = 'multipleTab';
+		$phpWord->addParagraphStyle(
+			$multipleTabsStyleName,
+			array(
+				'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::BOTH,
+				'tabs' => array(
+					new \PhpOffice\PhpWord\Style\Tab('left', 550),
+					new \PhpOffice\PhpWord\Style\Tab('center', 3200),
+					new \PhpOffice\PhpWord\Style\Tab('right', 5300),
+				),
+			)
+		);
 		
 		
 		$section = $phpWord->addSection();
@@ -68,12 +80,9 @@ class Word extends CI_Controller {
 		$table->addCell(2500)->addText("Tanggal",$tableHeader, $paragraphTable);
 		$table->addCell(200)->addText(":",$tableHeader, $paragraphTable);
 		$table->addCell(7300)->addText("",$tableHeader, $paragraphTable);
-		$section->addTextBreak(1);
-		$section->addText('Aliquip amet cupidatat reprehenderit proident. Non quis mollit amet ea ut ea eiusmod. Labore laborum dolor nisi deserunt anim reprehenderit esse ipsum cupidatat. Velit minim dolore adipisicing eu velit adipisicing. Commodo dolore amet qui et ipsum mollit irure.
-
-		Ea consequat ea deserunt quis occaecat sunt est ea pariatur ullamco mollit occaecat id proident. Duis nostrud laboris proident id laborum fugiat aliquip sit Lorem voluptate. Exercitation esse incididunt occaecat pariatur. Sint fugiat eiusmod do reprehenderit non qui dolore nulla eiusmod. Veniam labore nulla eiusmod ex consectetur occaecat aliquip ea id quis aliqua non id excepteur.
-
-		Consequat eu duis sint qui dolor voluptate cillum ut laborum esse exercitation consectetur. Nostrud sint cupidatat consequat ipsum voluptate cillum. Proident labore elit culpa labore nostrud irure ipsum deserunt qui. Veniam Lorem ea non occaecat exercitation incididunt aliquip culpa ullamco culpa ullamco pariatur consequat velit. Ipsum sunt ex tempor magna in consequat minim nisi in. Laboris excepteur dolor magna tempor consequat.');
+		$lineStyle = array('weight' => 0,5, 'width' => 450, 'height' => 0, 'color' => 'black');
+		$section->addLine($lineStyle);
+		$section->addText("\t" . "Bersama ini kami sampaikan hal sebagai berikut.",null, $multipleTabsStyleName);
 		
 				$writer = new Word2007($phpWord);
 				

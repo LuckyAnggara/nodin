@@ -95,6 +95,12 @@
                                 </div><!-- input-group -->
                             </div>
                         </div>
+                        <div class="col-12">
+                            <label class="col-3 col-form-label">Isi Nota Dinas</label>
+                            <div class="col-12">
+                                <textarea type="text" cols="10" name="isi" class="form-control" required placeholder="Mohon di isi Perihal Nota Dinas"></textarea>
+                            </div>
+                        </div>
                         <!-- <div class="form-group row">
                             <label class="col-3 col-form-label">Lampiran*</label>
                             <div class="col-5">
