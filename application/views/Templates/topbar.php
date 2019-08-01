@@ -12,6 +12,9 @@
     <!-- App favicon -->
     <link rel="shortcut icon" href="<?= base_url('assets/'); ?>images/favicon.ico">
 
+    <!-- Plugins css-->
+    <link href="assets/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.css" rel="stylesheet" />
+
     <!-- DataTables -->
     <link href="<?= base_url('assets/'); ?>plugins/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
     <link href="<?= base_url('assets/'); ?>plugins/datatables/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />

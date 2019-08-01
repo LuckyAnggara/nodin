@@ -21,6 +21,16 @@ class Surat extends CI_Controller
         $this->load->view('Surat/Nota Dinas/NotaDinasJs.php');
     }
 
+    public function Nodin_Detail($id)
+    {
+        $data['detail'] = $this->modelData->getDetailNodin($id);
+        $this->load->view('Templates/topbar.php');
+        $this->load->view('Surat/Nota Dinas/detail.php',$data);
+        $this->load->view('Templates/rightbar.php');
+        $this->load->view('Templates/footer.php');
+        $this->load->view('Surat/Nota Dinas/NotaDinasJs.php');
+    }
+
     function getDataMasuk()
     {
         echo $this->modelData->get_all_data_nodin();
