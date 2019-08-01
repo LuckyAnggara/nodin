@@ -26,6 +26,16 @@ class ModelData extends CI_Model
         return $this->db->get()->row_array();
     }
 
+
+    function getComment($id)
+    {
+        $this->db->select('comment.id_comment, comment.user, comment.isi, comment.date_created as tanggal, user.image');
+        $this->db->from('comment');
+        $this->db->join('user', 'user.id_user = comment.user');
+        $this->db->where('id_comment',$id);
+        return $this->db->get()->row_array();
+    }
+
     function get_all_data_tujuan($namaTujuan)
     {
         $this->db->select('nama');

@@ -24,12 +24,14 @@ class Surat extends CI_Controller
     public function Nodin_Detail($id)
     {
         $data['detail'] = $this->modelData->getDetailNodin($id);
+        $data['comment'] = $this->getDataComment($data['detail']['comment']);        
         $this->load->view('Templates/topbar.php');
         $this->load->view('Surat/Nota Dinas/detail.php',$data);
         $this->load->view('Templates/rightbar.php');
         $this->load->view('Templates/footer.php');
         $this->load->view('Surat/Nota Dinas/NotaDinasJs.php');
     }
+
 
     function getDataMasuk()
     {
@@ -78,6 +80,27 @@ class Surat extends CI_Controller
         $namaTujuan = $this->input->post('nama');
         $data = $this->modelData->get_all_data_tujuan($namaTujuan);
         echo json_encode($data);
+        
+    }
+
+    function getDataComment($data)
+    {
+        $comment = explode(",", $data);
+        foreach ($comment as $key => $value) {
+            $dataComment[] = $this->modelData->getComment($value);
+        }
+        return $dataComment;
+    }
+
+    function getDataComment2($data)
+    {
+        $comment = explode("_", $data);
+        foreach ($comment as $key => $value) {
+            $dataComment[] = $this->modelData->getComment($value);
+        }
+echo "<pre>";
+print_r($dataComment);
+echo "</pre>";
         
     }
     
