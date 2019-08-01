@@ -18,7 +18,15 @@ class ModelData extends CI_Model
         return $this->datatables->generate();
     }
 
-     function get_all_data_tujuan($namaTujuan)
+    function getDetailNodin($id)
+    {
+        $this->db->select('*');
+        $this->db->from('detail');
+        $this->db->where('id_no_surat',$id);
+        return $this->db->get()->row_array();
+    }
+
+    function get_all_data_tujuan($namaTujuan)
     {
         $this->db->select('nama');
         $this->db->from('tujuanintern');
