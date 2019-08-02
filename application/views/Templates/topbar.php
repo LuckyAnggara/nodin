@@ -13,7 +13,7 @@
     <link rel="shortcut icon" href="<?= base_url('assets/'); ?>images/favicon.ico">
 
     <!-- Plugins css-->
-    <link href="assets/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.css" rel="stylesheet" />
+    <link href="<?= base_url('assets/'); ?>plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.css" rel="stylesheet" />
 
     <!-- DataTables -->
     <link href="<?= base_url('assets/'); ?>plugins/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
@@ -125,13 +125,13 @@
 
                         <li class="dropdown notification-list">
                             <a class="nav-link dropdown-toggle waves-effect waves-light nav-user" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                                <img src="<?= base_url('assets/'); ?>images/users/avatar-1.jpg" alt="user" class="rounded-circle">
+                                <img src="<?= base_url('assets/images/users/'.$user['image']);?>" alt="user" class="rounded-circle">
                             </a>
                             <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
 
                                 <!-- item-->
                                 <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                    <i class="ti-user m-r-5"></i> Profile
+                                    <i class="ti-user m-r-5"></i><?= $user['nama_user'];?>
                                 </a>
 
                                 <!-- item-->

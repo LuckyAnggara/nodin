@@ -21,15 +21,27 @@ class Surat extends CI_Controller
         $this->load->view('Surat/Nota Dinas/NotaDinasJs.php');
     }
 
+    public function index2($id)
+    {
+        $data['user'] = $this->modelUser->getDataUser('php');
+        $data['detail'] = $this->modelData->getDetailNodin($id);
+        $data['comment'] = $this->getDataComment2($data['detail']['comment']);        
+       $this->load->view('Templates/topbar.php',$data);
+        $this->load->view('Surat/Nota Dinas/index2.php',$data);
+       $this->load->view('Templates/footer.php');
+        $this->load->view('Surat/Nota Dinas/DetailJs.php');
+    }
+
     public function Nodin_Detail($id)
     {
+        $data['user'] = $this->modelUser->getDataUser('php');
         $data['detail'] = $this->modelData->getDetailNodin($id);
-        $data['comment'] = $this->getDataComment($data['detail']['comment']);        
-        $this->load->view('Templates/topbar.php');
+        $data['comment'] = $this->getDataComment2($data['detail']['comment']);        
+        $this->load->view('Templates/topbar.php',$data);
         $this->load->view('Surat/Nota Dinas/detail.php',$data);
         $this->load->view('Templates/rightbar.php');
         $this->load->view('Templates/footer.php');
-        $this->load->view('Surat/Nota Dinas/NotaDinasJs.php');
+        $this->load->view('Surat/Nota Dinas/DetailJs.php');
     }
 
 
@@ -83,6 +95,11 @@ class Surat extends CI_Controller
         
     }
 
+    function addComment()
+    {
+        $this->modelData->addDataComment();
+    }
+
     function getDataComment($data)
     {
         $comment = explode(",", $data);
@@ -94,14 +111,10 @@ class Surat extends CI_Controller
 
     function getDataComment2($data)
     {
-        $comment = explode("_", $data);
-        foreach ($comment as $key => $value) {
-            $dataComment[] = $this->modelData->getComment($value);
-        }
-echo "<pre>";
-print_r($dataComment);
-echo "</pre>";
-        
+       
+       $dataComment = $this->modelData->getCommentv2($data);
+       echo $dataComment;
+    
     }
     
 }

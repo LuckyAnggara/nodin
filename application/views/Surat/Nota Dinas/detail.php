@@ -1,5 +1,3 @@
-        <!-- Bootstrap tagsinput -->
-        <script src="assets/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
         <div class="wrapper">
             <div class="container-fluid">
 
@@ -7,6 +5,7 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <h4 class="page-title">Detail Nomor  : <?=$detail['id_no_surat']; ?></h4>
+                        <p id="noSurat" hidden><?=$detail['id_no_surat']; ?></p>
                     </div>
                 </div>
                 <!-- end page title end breadcrumb -->
@@ -70,9 +69,11 @@
                                         <div class="fileupload add-new-plus">
                                             <span><i class="fa fa-book"></i></span>
                                             <input type="file" class="upload">
+                                            
                                         </div>
                                     </div>
                                 </div>
+                                <small>*PDF Only</small>
                                 <hr>
                                 <div class="row">
                                     <div class="col-sm-12">
@@ -155,20 +156,28 @@
                                 </div>
                             </div>
 
-                            <a href="" ><p class="header-title m-t-0 m-b-30">Comments (<?= count($comment);?>)</p></a>
+                            <a href="" ><p class="header-title m-t-0 m-b-30">Comments (<?php if(count($comment[0])<>0) 
+                                                                                        {
+                                                                                           echo count($comment);
+                                                                                        }else{
+                                                                                            echo "0";
+                                                                                            }
+                                                                                            ?>)</p></a>
                                                 
                             
                             <table class="comment datatable-surat">
                             <tbody>
-                                <?php foreach ($comment as $key => $value): ?>
+                                <?php if(count($comment[0])<>0){                
+                                foreach ($comment as $key => $value): ?>
                                 <tr>
                                     <th>
                                     <div class="media m-b-20">
                                         <div class="d-flex mr-3">
                                             <a href="#"> <img class="media-object rounded-circle thumb-sm" alt="64x64" src="<?= base_url('assets/images/users/'.$value['image']);?>"> </a>
+                                            
                                         </div>
                                         <div class="media-body">
-                                            <h5 class="mt-0"><?= $value['user'];?></h5>
+                                            <h5 class="mt-0"><?= $value['nama_user'];?></h5>
                                             <p class="font-13 text-muted mb-0">
                                                 <a href="" class="text-primary"></a>
                                                 <?= nl2br($value['isi']);?>
@@ -178,18 +187,24 @@
                                     </div>
                                     </th>
                                 </tr>                                   
-                                <?php endforeach ;?>
+                                <?php endforeach ; ?>
+                                <?php } else { 
+                                echo "<small>be the first to comment</small>";
+                                 } ?>
                                 
                             </tbody>
                             </table>
-
+                                 <br>
                             <div>
                                 <div class="media m-b-20">
                                     <div class="d-flex mr-3">
-                                        <a href="#"> <img class="media-object rounded-circle thumb-sm" alt="64x64" src="<?= base_url('assets/images/users/avatar-1.jpg');?>"> </a>
+                                        <a href="#"> <img class="media-object rounded-circle thumb-sm" alt="64x64" src="<?= base_url('assets/images/users/'.$user['image']);?>"> </a>
                                     </div>
+                                    <!-- dipake buat parsing variabel id_user ke javascript -->
+                                    <p id="namaUserComment" hidden><?php echo $user['id_user'];?></p>
+                                    <!-- END -->
                                     <div class="media-body">
-                                        <input type="text" class="form-control input-sm" placeholder="Some text value...">
+                                        <textarea id="commentPost" rows ="1" class="form-control" placeholder="Some text value... Type alt+enter to post"></textarea>
                                     </div>
                                 </div>
 

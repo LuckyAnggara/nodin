@@ -8,10 +8,9 @@ class ModelData extends CI_Model
         $this->datatables->select('id_nodin,nosurat_nodin,dari_nodin,ke_nodin,perihal_nodin,lampiran,tanggal_nodin,deleteStatus,date_created');
         $this->datatables->from('nodin');
         $this->datatables->where('deleteStatus',0);
-        $this->datatables->add_column('lampiran', "<a data-toggle='tooltip' data-placement='left' title='Tooltip on left' href='../assets/lampiran/surat/nodin/$1'>$1</a>", 'lampiran');
         $this->datatables->add_column(
             'aksi',
-            '<a href="./detailmasuk/$1"class="btn btn-icon waves-effect waves-light btn-primary btn-sm" ><i class="fa fa-mail-forward" data-toggle="tooltip" title="Hooray!"></i></a>' . " " .
+            '<a href="../Surat/nodin_detail/$1"class="btn btn-icon waves-effect waves-light btn-primary btn-sm" ><i class="fa fa-mail-forward" data-toggle="tooltip" title="Hooray!"></i></a>' . " " .
                 '<button type="button" class="btn btn-icon waves-effect waves-light btn-success btn-sm" onclick="viewData($1)" ><i class="fa fa-search" ></i></button>' . " " . '<button type="button" class="btn btn-icon waves-effect waves-light btn-danger btn-sm" onclick="warningDelete($1)" ><i class="fa fa-trash" ></i></button>',
             'id_nodin'
         );
@@ -26,10 +25,68 @@ class ModelData extends CI_Model
         return $this->db->get()->row_array();
     }
 
+    function addDataComment()
+    {
+        $post = $this->input->post();
+        $data = [
+            'user' => $post["user"],
+            'isi' => $post["comment"],
+            'date_created' => date("Y-m-d H:i:s"),
+        ];
+        $this->db->insert('comment', $data);
+        $idSurat = $post["idSurat"];
+        $idComment = $this->cekLastComment()['id_comment'];
+        $this->pushCommentSurat($idSurat,$idComment);
+
+    }
+    public function cekLastComment()
+    {
+        $this->db->select('id_comment');
+        $this->db->from('comment');
+        $this->db->order_by('id_comment', 'desc');
+        $this->db->limit(1);
+        return $this->db->get()->row_array();
+    }
+
+    function pushCommentSurat($idSurat,$idComment)
+    {
+        $this->db->select('*');
+        $this->db->from('detail');
+        $this->db->where('id_no_surat', $idSurat);
+
+        $data = $this->db->get()->row_array();
+
+        $comment = $data['comment'];
+
+        $dataUpdate = $comment.','.$idComment;
+
+        $this->db->set('comment',$dataUpdate);
+        $this->db->where('id_no_surat', $idSurat);
+        $this->db->update('detail');
+
+    }
+
+    function getCommentv2($idComment)
+    {
+
+        $this->datatables->select('comment.id_comment, comment.user, comment.isi, comment.date_created as tanggal, user.image,user.nama_user');
+        $this->datatables->from('comment');
+        $this->datatables->join('user', 'user.id_user = comment.user');
+        $where_in = '1,2,3,5';
+        $this->datatables->where_in('id_comment',explode(',',$where_in) );
+        return $this->datatables->generate();
+    
+    }
 
     function getComment($id)
     {
-        $this->db->select('comment.id_comment, comment.user, comment.isi, comment.date_created as tanggal, user.image');
+
+        // $this->datatables->select('comment.id_comment, comment.user, comment.isi, comment.date_created as tanggal, user.image,user.nama_user');
+        // $this->datatables->from('comment');
+        // $this->datatables->join('user', 'user.id_user = comment.user');
+        // $this->db->where('id_comment',$id);
+        // return $this->datatables->generate();
+        $this->db->select('comment.id_comment, comment.user, comment.isi, comment.date_created as tanggal, user.image,user.nama_user');
         $this->db->from('comment');
         $this->db->join('user', 'user.id_user = comment.user');
         $this->db->where('id_comment',$id);
