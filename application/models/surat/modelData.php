@@ -69,13 +69,24 @@ class ModelData extends CI_Model
     function getCommentv2($idComment)
     {
 
-        $this->datatables->select('comment.id_comment, comment.user, comment.isi, comment.date_created as tanggal, user.image,user.nama_user');
-        $this->datatables->from('comment');
-        $this->datatables->join('user', 'user.id_user = comment.user');
-        $where_in = '1,2,3,5';
-        $this->datatables->where_in('id_comment',explode(',',$where_in) );
-        return $this->datatables->generate();
-    
+        // $this->datatables->select('comment.id_comment, comment.user, comment.isi, comment.date_created as tanggal, user.image,user.nama_user');
+        // $this->datatables->from('comment');
+        // $this->datatables->join('user', 'user.id_user = comment.user');
+        // $where_in = $idComment;
+        // $this->datatables->where_in('id_comment',explode(',',$where_in) );
+
+        // return $this->datatables->generate();
+
+        $this->db->select('comment.id_comment, comment.user, comment.isi, comment.date_created as tanggal, user.image,user.nama_user');
+        $this->db->from('comment');
+        $this->db->join('user', 'user.id_user = comment.user');
+        $where_in = $idComment;
+        $this->db->where_in('id_comment',explode(',',$where_in) );
+        $this->db->order_by('id_comment', 'DESC');
+        return $this->db->get()->result_array();
+
+
+        
     }
 
     function getComment($id)

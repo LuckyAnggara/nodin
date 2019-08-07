@@ -25,7 +25,7 @@
 <!-- script datatable -->
     <script type="text/javascript">
     $(document).ready(function() {
-    $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings) {
+            $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings) {
                 return {
                     "iStart": oSettings._iDisplayStart,
                     "iEnd": oSettings.fnDisplayEnd(),

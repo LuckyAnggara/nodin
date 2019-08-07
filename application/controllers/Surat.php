@@ -14,7 +14,8 @@ class Surat extends CI_Controller
 
     public function Nota_Dinas()
     {
-        $this->load->view('Templates/topbar.php');
+        $data['user'] = $this->modelUser->getDataUser('php');
+        $this->load->view('Templates/topbar.php',$data);
         $this->load->view('Surat/Nota Dinas/index.php');
         $this->load->view('Templates/rightbar.php');
         $this->load->view('Templates/footer.php');
@@ -34,9 +35,9 @@ class Surat extends CI_Controller
 
     public function Nodin_Detail($id)
     {
-        $data['user'] = $this->modelUser->getDataUser('php');
+        $data['user'] = $this->modelUser->getDataUser('sip');
         $data['detail'] = $this->modelData->getDetailNodin($id);
-        $data['comment'] = $this->getDataComment2($data['detail']['comment']);        
+        $data['comment'] = $this->getDataComment($data['detail']['comment']);        
         $this->load->view('Templates/topbar.php',$data);
         $this->load->view('Surat/Nota Dinas/detail.php',$data);
         $this->load->view('Templates/rightbar.php');
@@ -109,12 +110,14 @@ class Surat extends CI_Controller
         return $dataComment;
     }
 
-    function getDataComment2($data)
+    function getDataComment2()
     {
-       
-       $dataComment = $this->modelData->getCommentv2($data);
-       echo $dataComment;
-    
+        
+        $id = $this->uri->segment('3');
+        $data= $this->modelData->getDetailNodin($id);
+        $dataComment= $this->modelData->getCommentv2($data['comment']);
+        $dataComment= json_encode($dataComment);
+        echo $dataComment;
     }
     
 }

@@ -28,8 +28,8 @@
                                 </div>
                             </div>
                     
-                            <div class="dropdown pull-right">
-                                <a href="#" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown" aria-expanded="false">
+                            <div class="dropdown pull-right" >
+                                <a  onclick="deleteLampiran(); class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown" aria-expanded="false">
                                     <i class="fa fa-window-close" data-toggle="tooltip" data-placement="top" title="Delete Lampiran"></i>
                                 </a>
                             </div>
@@ -40,7 +40,6 @@
                                     <h5 class="font-600 m-b-5">Tanggal Upload Lampiran</h5>
                                     <p><?= $detail['date_upload'];?></p>
                                 </li>
-
                                 <li>
                                     <h5 class="font-600 m-b-5">Tanggal Kirim</h5>
                                     <?php if ($detail['status']==0)  {;?>
@@ -146,16 +145,6 @@
 
                     <div class="col-md-4">
                         <div class="card-box">
-                            <div class="dropdown pull-right">
-                                <a href="#" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown" aria-expanded="false">
-                                    <i class="mdi mdi-dots-vertical"></i>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <!-- item-->
-                                    <a href="javascript:void(0);" class="dropdown-item">Delete</a>
-                                </div>
-                            </div>
-
                             <a href="" ><p class="header-title m-t-0 m-b-30">Comments (<?php if(count($comment[0])<>0) 
                                                                                         {
                                                                                            echo count($comment);
@@ -165,34 +154,7 @@
                                                                                             ?>)</p></a>
                                                 
                             
-                            <table class="comment datatable-surat">
-                            <tbody>
-                                <?php if(count($comment[0])<>0){                
-                                foreach ($comment as $key => $value): ?>
-                                <tr>
-                                    <th>
-                                    <div class="media m-b-20">
-                                        <div class="d-flex mr-3">
-                                            <a href="#"> <img class="media-object rounded-circle thumb-sm" alt="64x64" src="<?= base_url('assets/images/users/'.$value['image']);?>"> </a>
-                                            
-                                        </div>
-                                        <div class="media-body">
-                                            <h5 class="mt-0"><?= $value['nama_user'];?></h5>
-                                            <p class="font-13 text-muted mb-0">
-                                                <a href="" class="text-primary"></a>
-                                                <?= nl2br($value['isi']);?>
-                                            </p>
-                                            <p class="text-success font-13"><?= $value['tanggal'];?></p>
-                                        </div>
-                                    </div>
-                                    </th>
-                                </tr>                                   
-                                <?php endforeach ; ?>
-                                <?php } else { 
-                                echo "<small>be the first to comment</small>";
-                                 } ?>
-                                
-                            </tbody>
+                            <table id="datatable-comment">
                             </table>
                                  <br>
                             <div>
