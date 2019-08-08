@@ -22,9 +22,27 @@ class ModelData extends CI_Model
         $this->db->select('*');
         $this->db->from('detail');
         $this->db->where('id_no_surat',$id);
-        return $this->db->get()->row_array();
+        $data = $this->db->get()->row_array();
+        if($data['id_no_surat'] == null){
+            $this->_injectDetail($id);
+
+            $this->db->select('*');
+            $this->db->from('detail');
+            $this->db->where('id_no_surat',$id);
+            return $this->db->get()->row_array();
+
+        }else{
+        return $data;
+        }
     }
 
+    private function _injectDetail($id)
+    {
+        $data = [
+            'id_no_surat' => $id,
+        ];
+        $this->db->insert('detail', $data);
+    }
     function addDataComment()
     {
         $post = $this->input->post();
@@ -190,5 +208,28 @@ class ModelData extends CI_Model
         $this->db->select('*');
         $this->db->where('id_nodin', $id);
         return $this->db->get('nodin')->row_array();
+    }
+
+    public function deleteDataLampiran($idSurat)
+    {
+        $this->db->set('lampiran',"");
+        $this->db->where('id_no_surat', $idSurat);
+        $this->db->update('detail');
+    }
+
+    public function isTujuan($id,$user)
+    {
+        $this->db->select('*');
+        $this->db->where('id_nodin', $id);
+        $data = $this->db->get('nodin')->row_array();
+
+        if($data['dari_nodin'] == $user)
+        {
+            return "1";
+        }else{
+            return "0";
+        }
+
+
     }
 }

@@ -27,12 +27,14 @@
                                     <span class="badge badge-danger">Not Sent</span>
                                 </div>
                             </div>
-                    
+                            <?php if ($detail['lampiran'] == "")  {}else{;?>
                             <div class="dropdown pull-right" >
-                                <a  onclick="deleteLampiran(); class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown" aria-expanded="false">
+                                <a href="#" onclick="deleteLampiran(); return false;" class="dropdown-toggle arrow-none card-drop">
                                     <i class="fa fa-window-close" data-toggle="tooltip" data-placement="top" title="Delete Lampiran"></i>
                                 </a>
                             </div>
+                            <?php };?>
+
                             <h4 class="font-600 m-b-20">Lampiran</h4>
                             <hr>
                             <ul class="list-inline task-dates m-b-0 m-t-20">
@@ -153,8 +155,8 @@
                                                                                             }
                                                                                             ?>)</p></a>
                                                 
-                            
-                            <table id="datatable-comment">
+                
+                            <table id="datatable-comment" class="cell-border" style="width:100%">
                             </table>
                                  <br>
                             <div>
@@ -166,7 +168,7 @@
                                     <p id="namaUserComment" hidden><?php echo $user['id_user'];?></p>
                                     <!-- END -->
                                     <div class="media-body">
-                                        <textarea id="commentPost" rows ="1" class="form-control" placeholder="Some text value... Type alt+enter to post"></textarea>
+                                        <textarea id="commentPost" rows ="1" class="form-control" placeholder="Type to Comment... alt+enter to post"></textarea>
                                     </div>
                                 </div>
 

@@ -14,7 +14,7 @@ class Surat extends CI_Controller
 
     public function Nota_Dinas()
     {
-        $data['user'] = $this->modelUser->getDataUser('php');
+        $data['user'] = $this->modelUser->getDataUser('PHP');
         $this->load->view('Templates/topbar.php',$data);
         $this->load->view('Surat/Nota Dinas/index.php');
         $this->load->view('Templates/rightbar.php');
@@ -22,27 +22,30 @@ class Surat extends CI_Controller
         $this->load->view('Surat/Nota Dinas/NotaDinasJs.php');
     }
 
-    public function index2($id)
-    {
-        $data['user'] = $this->modelUser->getDataUser('php');
-        $data['detail'] = $this->modelData->getDetailNodin($id);
-        $data['comment'] = $this->getDataComment2($data['detail']['comment']);        
-       $this->load->view('Templates/topbar.php',$data);
-        $this->load->view('Surat/Nota Dinas/index2.php',$data);
-       $this->load->view('Templates/footer.php');
-        $this->load->view('Surat/Nota Dinas/DetailJs.php');
-    }
-
     public function Nodin_Detail($id)
     {
-        $data['user'] = $this->modelUser->getDataUser('sip');
+        $data['user'] = $this->modelUser->getDataUser('PHP');
         $data['detail'] = $this->modelData->getDetailNodin($id);
+        print_r($data['detail']);
+        $cek = $this->modelData->isTujuan($data['detail']['id_no_surat'], $data['user']['id_user']);
+        if ($cek == 1)
+        {
         $data['comment'] = $this->getDataComment($data['detail']['comment']);        
         $this->load->view('Templates/topbar.php',$data);
         $this->load->view('Surat/Nota Dinas/detail.php',$data);
         $this->load->view('Templates/rightbar.php');
         $this->load->view('Templates/footer.php');
         $this->load->view('Surat/Nota Dinas/DetailJs.php');
+        }else{
+        // $this->load->view('Templates/topbar.php',$data);
+        // $this->load->view('Surat/Nota Dinas/index2.php');
+        // // $this->load->view('Surat/Nota Dinas/detail.php',$data);
+        // $this->load->view('Templates/rightbar.php');
+        // $this->load->view('Templates/footer.php');
+        // $this->load->view('Surat/Nota Dinas/DetailJs.php');
+        }    
+        
+        
     }
 
 
@@ -95,7 +98,12 @@ class Surat extends CI_Controller
         echo json_encode($data);
         
     }
-
+    function deleteLampiran()
+    {
+        $post = $this->input->post();
+        $idSurat = $post['idSurat'];
+        $this->modelData->deleteDataLampiran($idSurat);
+    }
     function addComment()
     {
         $this->modelData->addDataComment();

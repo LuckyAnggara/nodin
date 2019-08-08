@@ -11,10 +11,6 @@
 <!-- Toastr js -->
 <script src="<?= base_url('assets/'); ?>plugins/toastr/toastr.min.js"></script>
 
- <!-- App js -->
-<script src="<?= base_url('assets/'); ?>js/jquery.core.js"></script>
-<script src="<?= base_url('assets/'); ?>js/jquery.app.js"></script>
-
 <script>
 var ta = document.getElementById('commentPost');
 ta.onkeydown = function (event) {
@@ -60,12 +56,25 @@ function addComment(){
                $("#commentPost").focusout('');
                toastr.success('New Comment Success!', user)
             }
-            })
+            });
     }
-}
+};
 function deleteLampiran(){
    var idSurat = $("#noSurat").text();
-}
+   
+   $.ajax({
+         url: "<?= Base_url('surat/deleteLampiran'); ?>",
+         type: "post",
+         data: {
+         idSurat: idSurat,
+         },
+         success: function(data) {
+         console.log(idSurat);
+         setTimeout(location.reload.bind(location), 1000);
+         toastr.success('Lampiran Deleted');
+         }
+      })
+};
 
 </script>
 
@@ -81,8 +90,9 @@ function deleteLampiran(){
                     zeroRecords: "No Comment Here, be The First"
          },
          "processing": true,
-         "serverSide": true,
-         "scrollY": '100vh',
+         "serverSide": true,  
+         "scrollY": "500px",
+         "scrollX": false,
          "scrollCollapse": true,
          "lengthChange": false,
          "searching" : false,
@@ -114,6 +124,7 @@ function deleteLampiran(){
                                             '<p class="text-success font-13">'+data.tanggal+'</p>'+
                                         '</div>'+
                                     '</div>';
+
                         
                         return display;
                   }
