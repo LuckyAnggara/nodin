@@ -23,14 +23,22 @@ class ModelData extends CI_Model
         $this->db->from('detail');
         $this->db->where('id_no_surat',$id);
         $data = $this->db->get()->row_array();
+        $this->db->select('*');
+        $this->db->from('nodin');
+        $this->db->where('nosurat_nodin',$id);
+        $dataNodin = $this->db->get()->row_array();
         if($data['id_no_surat'] == null){
+            if(!$dataNodin['nosurat_nodin'] == null){
             $this->_injectDetail($id);
-
             $this->db->select('*');
             $this->db->from('detail');
             $this->db->where('id_no_surat',$id);
             return $this->db->get()->row_array();
+            }else{
 
+                return null;
+
+            }
         }else{
         return $data;
         }
@@ -98,6 +106,7 @@ class ModelData extends CI_Model
         $this->db->select('comment.id_comment, comment.user, comment.isi, comment.date_created as tanggal, user.image,user.nama_user');
         $this->db->from('comment');
         $this->db->join('user', 'user.id_user = comment.user');
+        $this->db->where('deleteStatus',0);
         $where_in = $idComment;
         $this->db->where_in('id_comment',explode(',',$where_in) );
         $this->db->order_by('id_comment', 'DESC');
@@ -196,6 +205,13 @@ class ModelData extends CI_Model
         }
     }
 
+    public function deleteDataComment($idComment)
+    {
+        $this->db->set('deleteStatus', 1);
+        $this->db->where('id_comment', $idComment);
+        $this->db->update('comment');  
+    }
+
     public function deleteData($id) // hanya merubah status akses delete full data di admin
     {
         $this->db->set('deleteStatus', 1);
@@ -222,14 +238,17 @@ class ModelData extends CI_Model
         $this->db->select('*');
         $this->db->where('id_nodin', $id);
         $data = $this->db->get('nodin')->row_array();
-
         if($data['dari_nodin'] == $user)
         {
             return "1";
         }else{
             return "0";
         }
+    }
 
-
+    function simpan_uploadLampiran($id,$lampiran){
+        $this->db->set('lampiran',$lampiran);
+        $this->db->where('id_no_surat', $id);
+        $this->db->update('detail');
     }
 }

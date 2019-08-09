@@ -10,6 +10,7 @@ class Surat extends CI_Controller
         $this->load->library('datatables');
         $this->load->model('surat/modelData');
         $this->load->library('form_validation');
+        $this->load->library('upload');
     }
 
     public function Nota_Dinas()
@@ -26,7 +27,6 @@ class Surat extends CI_Controller
     {
         $data['user'] = $this->modelUser->getDataUser('PHP');
         $data['detail'] = $this->modelData->getDetailNodin($id);
-        print_r($data['detail']);
         $cek = $this->modelData->isTujuan($data['detail']['id_no_surat'], $data['user']['id_user']);
         if ($cek == 1)
         {
@@ -37,12 +37,12 @@ class Surat extends CI_Controller
         $this->load->view('Templates/footer.php');
         $this->load->view('Surat/Nota Dinas/DetailJs.php');
         }else{
-        // $this->load->view('Templates/topbar.php',$data);
-        // $this->load->view('Surat/Nota Dinas/index2.php');
-        // // $this->load->view('Surat/Nota Dinas/detail.php',$data);
-        // $this->load->view('Templates/rightbar.php');
-        // $this->load->view('Templates/footer.php');
-        // $this->load->view('Surat/Nota Dinas/DetailJs.php');
+        $this->load->view('Templates/topbar.php',$data);
+        $this->load->view('Surat/Nota Dinas/index2.php');
+        // $this->load->view('Surat/Nota Dinas/detail.php',$data);
+        $this->load->view('Templates/rightbar.php');
+        $this->load->view('Templates/footer.php');
+       // $this->load->view('Surat/Nota Dinas/DetailJs.php');
         }    
         
         
@@ -108,6 +108,12 @@ class Surat extends CI_Controller
     {
         $this->modelData->addDataComment();
     }
+    function deleteComment()
+    {
+        $post = $this->input->post();
+        $idComment = $post['idComment']; 
+        $this->modelData->deleteDataComment($idComment);
+    }
 
     function getDataComment($data)
     {
@@ -126,6 +132,35 @@ class Surat extends CI_Controller
         $dataComment= $this->modelData->getCommentv2($data['comment']);
         $dataComment= json_encode($dataComment);
         echo $dataComment;
+    }
+
+    function uploadLampiran($idSurat){
+        $config['upload_path'] = './assets/lampiran/surat/nodin/'; //path folder
+        $config['allowed_types'] = 'pdf'; //type yang dapat diakses bisa anda sesuaikan
+        $config['encrypt_name'] = false; //nama yang terupload nantinya
+        $config['overwrite'] = TRUE;
+        $config['max_size'] = '6000';
+        $new_name = $idSurat.'.pdf';
+        $config['file_name'] = $new_name;
+ 
+        $this->upload->initialize($config);
+        if(!empty($_FILES['fileLampiran']))
+        {
+            if ($this->upload->do_upload('fileLampiran'))
+                {
+                    $gbr = $this->upload->data();
+                    $lampiran = $gbr['file_name']; //Mengambil file name dari gambar yang diupload
+                    $judul= $idSurat;
+                    $this->modelData->simpan_uploadLampiran($judul,$lampiran);
+                    redirect($this->uri->uri_string());
+                }else{
+                    echo $this->upload->display_errors(); 
+                }
+            }else{
+                $this->Nodin_Detail($idSurat);
+                //echo $this->upload->display_errors();
+        }
+                 
     }
     
 }

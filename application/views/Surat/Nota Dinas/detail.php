@@ -1,4 +1,7 @@
-        <div class="wrapper">
+<!-- form Uploads -->
+    <link href="<?= base_url('assets/'); ?>plugins/fileuploads/css/dropify.min.css" rel="stylesheet" type="text/css" />
+
+    <div class="wrapper">
             <div class="container-fluid">
 
                 <!-- Page-Title -->
@@ -29,7 +32,7 @@
                             </div>
                             <?php if ($detail['lampiran'] == "")  {}else{;?>
                             <div class="dropdown pull-right" >
-                                <a href="#" onclick="deleteLampiran(); return false;" class="dropdown-toggle arrow-none card-drop">
+                                <a href="#" onclick="warningDelete(); return false;" class="dropdown-toggle arrow-none card-drop">
                                     <i class="fa fa-window-close" data-toggle="tooltip" data-placement="top" title="Delete Lampiran"></i>
                                 </a>
                             </div>
@@ -54,36 +57,26 @@
                             </ul>
                             
                             <?php if($detail['lampiran'] == ""){;?>
-                            "Lampiran Belum ada"
+
                             <?php }else{ ?>
-                            <embed src="<?= base_url('assets/lampiran/surat/'.$detail['lampiran']);?>" width="100%" height="720" type="application/pdf">
+                            <embed src="<?= base_url('assets/lampiran/surat/nodin/'.$detail['lampiran']);?>" width="100%" height="720" type="application/pdf">
                             <?php } ?>
                             
                             <div class="clearfix"></div>
                             <?php if($detail['lampiran'] == ""){;?>
-                            
-                            
                             <div class="attached-files m-t-30">
-                                <h5 class="font-600">Upload Files </h5>
-                                <div class="files-list">
-                                    <div class="file-box m-l-15">
-                                        <div class="fileupload add-new-plus">
-                                            <span><i class="fa fa-book"></i></span>
-                                            <input type="file" class="upload">
-                                            
-                                        </div>
-                                    </div>
-                                </div>
-                                <small>*PDF Only</small>
+                                <form action="<?=base_url('surat/uploadLampiran/').$detail['id_no_surat'];?>" method="post" enctype="multipart/form-data">
+                                <h4 class="header-title m-t-0 m-b-30">Lampiran Belum Ada</h4>
+                                <input name="fileLampiran" type="file" class="dropify" data-height="100" data-max-file-size="10M" data-allowed-file-extensions="pdf"/>
+                                <br>
+                                <button type="submit" class="btn btn-primary waves-effect waves-light">Upload</button>
                                 <hr>
+                                </form>
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="text-right m-t-30">
-                                            <button type="submit" class="btn btn-success waves-effect waves-light">
+                                            <button type="submit" disabled data-toggle="tooltip" title="Belum ada Lampiran" class="btn btn-success waves-effect waves-light">
                                                 Send
-                                            </button>
-                                            <button type="button"
-                                                    class="btn btn-light waves-effect">Close
                                             </button>
                                         </div>
                                     </div>
@@ -126,7 +119,7 @@
                                         <div class="col-sm-12">
                                             <div class="text-right m-t-30">
                                                 <?php if ($detail['status']==0)  {;?>
-                                                <button type="submit" class="btn btn-success waves-effect waves-light">
+                                                <button onclick="#" type="submit" class="btn btn-success waves-effect waves-light">
                                                     Send
                                                 </button>
                                                 <?php }else{ ?>
@@ -135,7 +128,7 @@
                                                 </button>
                                                 <?php }?>
                                                 <button type="button"
-                                                        class="btn btn-light waves-effect">Close
+                                                        class="btn btn-light waves-effect">Back
                                                 </button>
                                             </div>
                                         </div>
@@ -147,15 +140,7 @@
 
                     <div class="col-md-4">
                         <div class="card-box">
-                            <a href="" ><p class="header-title m-t-0 m-b-30">Comments (<?php if(count($comment[0])<>0) 
-                                                                                        {
-                                                                                           echo count($comment);
-                                                                                        }else{
-                                                                                            echo "0";
-                                                                                            }
-                                                                                            ?>)</p></a>
-                                                
-                
+                            <a id="angkaKomen" href="" ><p class="header-title m-t-0 m-b-30">Comments</p></a>
                             <table id="datatable-comment" class="cell-border" style="width:100%">
                             </table>
                                  <br>
