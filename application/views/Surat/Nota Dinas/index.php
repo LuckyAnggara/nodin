@@ -3,7 +3,7 @@
 <!-- ============================================================== -->
 
 <!-- Sweet Alert css -->
-    <link href="<?= base_url('assets/'); ?>css/datatablewrap.css" rel="stylesheet" type="text/css" />
+<link href="<?= base_url('assets/'); ?>css/datatablewrap.css" rel="stylesheet" type="text/css" />
 <div class="wrapper">
     <div class="container-fluid">
 

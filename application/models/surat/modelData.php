@@ -7,7 +7,7 @@ class ModelData extends CI_Model
     {
         $this->datatables->select('id_nodin,nosurat_nodin,dari_nodin,ke_nodin,perihal_nodin,lampiran,tanggal_nodin,deleteStatus,date_created');
         $this->datatables->from('nodin');
-        $this->datatables->where('deleteStatus',0);
+        $this->datatables->where('deleteStatus', 0);
         $this->datatables->add_column(
             'aksi',
             '<a href="../Surat/nodin_detail/$1"class="btn btn-icon waves-effect waves-light btn-primary btn-sm" ><i class="fa fa-mail-forward" data-toggle="tooltip" title="Hooray!"></i></a>' . " " .
@@ -21,26 +21,25 @@ class ModelData extends CI_Model
     {
         $this->db->select('*');
         $this->db->from('detail');
-        $this->db->where('id_no_surat',$id);
+        $this->db->where('id_no_surat', $id);
         $data = $this->db->get()->row_array();
         $this->db->select('*');
         $this->db->from('nodin');
-        $this->db->where('nosurat_nodin',$id);
+        $this->db->where('nosurat_nodin', $id);
         $dataNodin = $this->db->get()->row_array();
-        if($data['id_no_surat'] == null){
-            if(!$dataNodin['nosurat_nodin'] == null){
-            $this->_injectDetail($id);
-            $this->db->select('*');
-            $this->db->from('detail');
-            $this->db->where('id_no_surat',$id);
-            return $this->db->get()->row_array();
-            }else{
+        if ($data['id_no_surat'] == null) {
+            if (!$dataNodin['nosurat_nodin'] == null) {
+                $this->_injectDetail($id);
+                $this->db->select('*');
+                $this->db->from('detail');
+                $this->db->where('id_no_surat', $id);
+                return $this->db->get()->row_array();
+            } else {
 
                 return null;
-
             }
-        }else{
-        return $data;
+        } else {
+            return $data;
         }
     }
 
@@ -62,8 +61,7 @@ class ModelData extends CI_Model
         $this->db->insert('comment', $data);
         $idSurat = $post["idSurat"];
         $idComment = $this->cekLastComment()['id_comment'];
-        $this->pushCommentSurat($idSurat,$idComment);
-
+        $this->pushCommentSurat($idSurat, $idComment);
     }
     public function cekLastComment()
     {
@@ -74,7 +72,7 @@ class ModelData extends CI_Model
         return $this->db->get()->row_array();
     }
 
-    function pushCommentSurat($idSurat,$idComment)
+    function pushCommentSurat($idSurat, $idComment)
     {
         $this->db->select('*');
         $this->db->from('detail');
@@ -84,12 +82,11 @@ class ModelData extends CI_Model
 
         $comment = $data['comment'];
 
-        $dataUpdate = $comment.','.$idComment;
+        $dataUpdate = $comment . ',' . $idComment;
 
-        $this->db->set('comment',$dataUpdate);
+        $this->db->set('comment', $dataUpdate);
         $this->db->where('id_no_surat', $idSurat);
         $this->db->update('detail');
-
     }
 
     function getCommentv2($idComment)
@@ -106,14 +103,11 @@ class ModelData extends CI_Model
         $this->db->select('comment.id_comment, comment.user, comment.isi, comment.date_created as tanggal, user.image,user.nama_user');
         $this->db->from('comment');
         $this->db->join('user', 'user.id_user = comment.user');
-        $this->db->where('deleteStatus',0);
+        $this->db->where('deleteStatus', 0);
         $where_in = $idComment;
-        $this->db->where_in('id_comment',explode(',',$where_in) );
+        $this->db->where_in('id_comment', explode(',', $where_in));
         $this->db->order_by('id_comment', 'DESC');
         return $this->db->get()->result_array();
-
-
-        
     }
 
     function getComment($id)
@@ -127,7 +121,7 @@ class ModelData extends CI_Model
         $this->db->select('comment.id_comment, comment.user, comment.isi, comment.date_created as tanggal, user.image,user.nama_user');
         $this->db->from('comment');
         $this->db->join('user', 'user.id_user = comment.user');
-        $this->db->where('id_comment',$id);
+        $this->db->where('id_comment', $id);
         return $this->db->get()->row_array();
     }
 
@@ -135,7 +129,7 @@ class ModelData extends CI_Model
     {
         $this->db->select('nama');
         $this->db->from('tujuanintern');
-        $this->db->like('nama',$namaTujuan);
+        $this->db->like('nama', $namaTujuan);
         return $this->db->get()->result_array();
     }
 
@@ -144,7 +138,7 @@ class ModelData extends CI_Model
         $nomor = $this->cekLastNodin();
         $noSurat = $nomor['nosurat_nodin'] + 1;
         $post = $this->input->post();
-        $keNodin = implode(', ', $post['tujuan']);
+        $keNodin = implode(',', $post['tujuan']);
         $data = [
             'nosurat_nodin' => $noSurat,
             'dari_nodin' => $post["asal"],
@@ -209,7 +203,7 @@ class ModelData extends CI_Model
     {
         $this->db->set('deleteStatus', 1);
         $this->db->where('id_comment', $idComment);
-        $this->db->update('comment');  
+        $this->db->update('comment');
     }
 
     public function deleteData($id) // hanya merubah status akses delete full data di admin
@@ -228,27 +222,35 @@ class ModelData extends CI_Model
 
     public function deleteDataLampiran($idSurat)
     {
-        $this->db->set('lampiran',"");
+        $this->db->set('lampiran', "");
         $this->db->where('id_no_surat', $idSurat);
         $this->db->update('detail');
     }
 
-    public function isTujuan($id,$user)
+    public function isTujuan($id, $user)
     {
         $this->db->select('*');
         $this->db->where('id_nodin', $id);
         $data = $this->db->get('nodin')->row_array();
-        if($data['dari_nodin'] == $user)
-        {
+        if ($data['dari_nodin'] == $user) {
             return "1";
-        }else{
+        } else {
             return "0";
         }
     }
 
-    function simpan_uploadLampiran($id,$lampiran){
-        $this->db->set('lampiran',$lampiran);
+    function simpan_uploadLampiran($id, $lampiran)
+    {
+        $this->db->set('lampiran', $lampiran);
         $this->db->where('id_no_surat', $id);
         $this->db->update('detail');
+    }
+
+    public function getDataTujuan($idSurat)
+    {
+        $this->db->select('*');
+        $this->db->from('nodin');
+        $this->db->where('nosurat_nodin', $idSurat);
+        return $this->db->get()->row_array();
     }
 }

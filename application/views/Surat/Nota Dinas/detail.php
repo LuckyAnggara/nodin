@@ -1,167 +1,159 @@
-<!-- form Uploads -->
-    <link href="<?= base_url('assets/'); ?>plugins/fileuploads/css/dropify.min.css" rel="stylesheet" type="text/css" />
+<div class="wrapper">
+    <div class="container-fluid">
 
-    <div class="wrapper">
-            <div class="container-fluid">
+        <!-- Page-Title -->
+        <div class="row">
+            <div class="col-sm-12">
+                <h4 class="page-title">Detail Nomor : <?= $detail['id_no_surat']; ?></h4>
+                <p id="noSurat" hidden><?= $detail['id_no_surat']; ?></p>
+            </div>
+        </div>
+        <!-- end page title end breadcrumb -->
 
-                <!-- Page-Title -->
-                <div class="row">
-                    <div class="col-sm-12">
-                        <h4 class="page-title">Detail Nomor  : <?=$detail['id_no_surat']; ?></h4>
-                        <p id="noSurat" hidden><?=$detail['id_no_surat']; ?></p>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card-box task-detail">
+                    <div class="dropdown pull-right">
+                        <a href="#" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown"
+                            aria-expanded="false">
+                            <i class="mdi mdi-dots-vertical"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a href="javascript:void(0);" class="dropdown-item">Delete</a>
+                        </div>
                     </div>
-                </div>
-                <!-- end page title end breadcrumb -->
+                    <div class="media m-b-30">
+                        <div class="media-body">
+                            <h4 class="media-heading mb-0 mt-0">Status</h4>
+                            <span class="badge badge-danger">Not Sent</span>
+                        </div>
+                    </div>
+                    <?php if ($detail['lampiran'] == "") { } else {; ?>
+                    <div class="dropdown pull-right">
+                        <a href="#" onclick="warningDelete(); return false;"
+                            class="dropdown-toggle arrow-none card-drop">
+                            <i class="fa fa-window-close" data-toggle="tooltip" data-placement="top"
+                                title="Delete Lampiran"></i>
+                        </a>
+                    </div>
+                    <?php }; ?>
 
-                <div class="row">
-                    <div class="col-md-8">
-                        <div class="card-box task-detail">
-                            <div class="dropdown pull-right">
-                                <a href="#" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown" aria-expanded="false">
-                                    <i class="mdi mdi-dots-vertical"></i>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                   <a href="javascript:void(0);" class="dropdown-item">Delete</a>
-                                </div>
-                            </div>
-                            <div class="media m-b-30">
-                                <div class="media-body">
-                                    <h4 class="media-heading mb-0 mt-0">Status</h4>
-                                    <span class="badge badge-danger">Not Sent</span>
-                                </div>
-                            </div>
-                            <?php if ($detail['lampiran'] == "")  {}else{;?>
-                            <div class="dropdown pull-right" >
-                                <a href="#" onclick="warningDelete(); return false;" class="dropdown-toggle arrow-none card-drop">
-                                    <i class="fa fa-window-close" data-toggle="tooltip" data-placement="top" title="Delete Lampiran"></i>
-                                </a>
-                            </div>
-                            <?php };?>
+                    <h4 class="font-600 m-b-20">Lampiran</h4>
+                    <hr>
+                    <ul class="list-inline task-dates m-b-0 m-t-20">
+                        <li>
+                            <h5 class="font-600 m-b-5">Tanggal Upload Lampiran</h5>
+                            <p><?= $detail['date_upload']; ?></p>
+                        </li>
+                        <li>
+                            <h5 class="font-600 m-b-5">Tanggal Kirim</h5>
+                            <?php if ($detail['status'] == 0) {; ?>
 
-                            <h4 class="font-600 m-b-20">Lampiran</h4>
-                            <hr>
-                            <ul class="list-inline task-dates m-b-0 m-t-20">
-                                <li>
-                                    <h5 class="font-600 m-b-5">Tanggal Upload Lampiran</h5>
-                                    <p><?= $detail['date_upload'];?></p>
-                                </li>
-                                <li>
-                                    <h5 class="font-600 m-b-5">Tanggal Kirim</h5>
-                                    <?php if ($detail['status']==0)  {;?>
-
-                                    <span class="badge badge-danger">Not Sent</span>
-                                    <?php }else{ ?>
-                                    <p> <?= $detail['date_kirim'];?> </p>
-                                    <?php } ?>
-                                </li>
-                            </ul>
-                            
-                            <?php if($detail['lampiran'] == ""){;?>
-
-                            <?php }else{ ?>
-                            <embed src="<?= base_url('assets/lampiran/surat/nodin/'.$detail['lampiran']);?>" width="100%" height="720" type="application/pdf">
+                            <span class="badge badge-danger">Not Sent</span>
+                            <?php } else { ?>
+                            <p> <?= $detail['date_kirim']; ?> </p>
                             <?php } ?>
-                            
-                            <div class="clearfix"></div>
-                            <?php if($detail['lampiran'] == ""){;?>
-                            <div class="attached-files m-t-30">
-                                <form action="<?=base_url('surat/uploadLampiran/').$detail['id_no_surat'];?>" method="post" enctype="multipart/form-data">
-                                <h4 class="header-title m-t-0 m-b-30">Lampiran Belum Ada</h4>
-                                <input name="fileLampiran" type="file" class="dropify" data-height="100" data-max-file-size="10M" data-allowed-file-extensions="pdf"/>
-                                <br>
-                                <button type="submit" class="btn btn-primary waves-effect waves-light">Upload</button>
-                                <hr>
-                                </form>
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <div class="text-right m-t-30">
-                                            <button type="submit" disabled data-toggle="tooltip" title="Belum ada Lampiran" class="btn btn-success waves-effect waves-light">
-                                                Send
-                                            </button>
-                                        </div>
-                                    </div>
+                        </li>
+                    </ul>
+
+                    <?php if ($detail['lampiran'] == "") {; ?>
+                    <?php } else {
+                        clearstatcache(); ?>
+                    <iframe id="emmbedPDF" src="<?= base_url('assets/lampiran/surat/nodin/' . $detail['lampiran']); ?>"
+                        width="100%" height="720" type="application/pdf"></iframe>
+                    <?php } ?>
+
+                    <div class="clearfix"></div>
+                    <?php if ($detail['lampiran'] == "") {; ?>
+                    <div class="attached-files m-t-30">
+                        <form action="<?= base_url('surat/uploadLampiran/') . $detail['id_no_surat']; ?>" method="post"
+                            enctype="multipart/form-data">
+                            <h4 class="header-title m-t-0 m-b-30">Lampiran Belum Ada</h4>
+                            <input name="fileLampiran" type="file" class="dropify" data-height="100"
+                                data-max-file-size="10M" data-allowed-file-extensions="pdf" />
+                            <br>
+                            <button type="submit" class="btn btn-primary waves-effect waves-light">Upload</button>
+                            <hr>
+                        </form>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="text-right m-t-30">
+                                    <button type="submit" disabled data-toggle="tooltip" title="Belum ada Lampiran"
+                                        class="btn btn-success waves-effect waves-light">
+                                        Send
+                                    </button>
                                 </div>
                             </div>
-                            <?php }else{ ?>
-                                <div class="attached-files m-t-30">
-                                    <table class="table">
-                                <thead class="thead-light">
+                        </div>
+                    </div>
+                    <?php } else { ?>
+                    <div class="attached-files m-t-30">
+                        <table id="tujuanTable" class="table" width="100%">
+                            <thead class="thead-light">
                                 <tr>
                                     <th>#</th>
-                                    <th>Lampiran</th>
-                                    <th>Tanggal Upload</th>
-                                    <th>Aksi</th>
+                                    <th>Tujuan</th>
+                                    <th>Status</th>
                                 </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                    <td>@fat</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">3</th>
-                                    <td>Larry</td>
-                                    <td>the Bird</td>
-                                    <td>@twitter</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                                    <hr>
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <div class="text-right m-t-30">
-                                                <?php if ($detail['status']==0)  {;?>
-                                                <button onclick="#" type="submit" class="btn btn-success waves-effect waves-light">
-                                                    Send
-                                                </button>
-                                                <?php }else{ ?>
-                                                <button type="submit" disabled class="btn btn-danger waves-effect waves-light">
-                                                    Sended
-                                                </button>
-                                                <?php }?>
-                                                <button type="button"
-                                                        class="btn btn-light waves-effect">Back
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
+                            </thead>
+                        </table>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="text-right m-t-30">
+                                    <?php if ($detail['status'] == 0) {; ?>
+                                    <a onclick="kirim();" class="btn btn-success waves-effect waves-light">
+                                        Send
+                                    </a>
+                                    <?php } else { ?>
+                                    <button type="submit" disabled class="btn btn-danger waves-effect waves-light">
+                                        Sended
+                                    </button>
+                                    <?php } ?>
+                                    <button type="button" class="btn btn-light waves-effect">Back
+                                    </button>
                                 </div>
-                            <?php }?>
-                        </div>
-                    </div><!-- end col -->
-
-                    <div class="col-md-4">
-                        <div class="card-box">
-                            <a id="angkaKomen" href="" ><p class="header-title m-t-0 m-b-30">Comments</p></a>
-                            <table id="datatable-comment" class="cell-border" style="width:100%">
-                            </table>
-                                 <br>
-                            <div>
-                                <div class="media m-b-20">
-                                    <div class="d-flex mr-3">
-                                        <a href="#"> <img class="media-object rounded-circle thumb-sm" alt="64x64" src="<?= base_url('assets/images/users/'.$user['image']);?>"> </a>
-                                    </div>
-                                    <!-- dipake buat parsing variabel id_user ke javascript -->
-                                    <p id="namaUserComment" hidden><?php echo $user['id_user'];?></p>
-                                    <!-- END -->
-                                    <div class="media-body">
-                                        <textarea id="commentPost" rows ="1" class="form-control" placeholder="Type to Comment... alt+enter to post"></textarea>
-                                    </div>
-                                </div>
-
                             </div>
                         </div>
-                    </div><!-- end col -->
+                    </div>
+                    <?php } ?>
                 </div>
-                <!-- end row -->
+            </div><!-- end col -->
 
-
-            </div> <!-- end container -->
+            <div class="col-md-4">
+                <div class="card-box">
+                    <a id="angkaKomen">
+                        <p class="header-title m-t-0 m-b-30">Comments</p>
+                    </a>
+                    <table id="datatable-comment" class="cell-border" style="width:100%">
+                    </table>
+                    <br>
+                    <div>
+                        <div class="media m-b-20">
+                            <div class="d-flex mr-3">
+                                <a href="#"> <img class="media-object rounded-circle thumb-sm" alt="64x64"
+                                        src="<?= base_url('assets/images/users/' . $user['image']); ?>"> </a>
+                            </div>
+                            <!-- dipake buat parsing variabel id_user ke javascript -->
+                            <p id="namaUserComment" hidden><?php echo $user['id_user']; ?></p>
+                            <!-- END -->
+                            <div class="media-body">
+                                <textarea id="commentPost" rows="1" class="form-control"
+                                    placeholder="Type to Comment... alt+enter to post"></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="text-right">
+                                    <a onclick="postComment();" class="btn btn-primary waves-effect waves-light">
+                                        Post
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- end col -->
+        </div>
+        <!-- end row -->
+    </div> <!-- end container -->

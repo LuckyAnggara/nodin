@@ -16,12 +16,16 @@
     <link href="<?= base_url('assets/'); ?>plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.css" rel="stylesheet" />
 
     <!-- DataTables -->
-    <link href="<?= base_url('assets/'); ?>plugins/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
-    <link href="<?= base_url('assets/'); ?>plugins/datatables/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <link href="<?= base_url('assets/'); ?>plugins/datatables/dataTables.bootstrap4.min.css" rel="stylesheet"
+        type="text/css" />
+    <link href="<?= base_url('assets/'); ?>plugins/datatables/buttons.bootstrap4.min.css" rel="stylesheet"
+        type="text/css" />
     <!-- Responsive datatable examples -->
-    <link href="<?= base_url('assets/'); ?>plugins/datatables/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <link href="<?= base_url('assets/'); ?>plugins/datatables/responsive.bootstrap4.min.css" rel="stylesheet"
+        type="text/css" />
     <!-- Multi Item Selection examples -->
-    <link href="<?= base_url('assets/'); ?>plugins/datatables/select.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <link href="<?= base_url('assets/'); ?>plugins/datatables/select.bootstrap4.min.css" rel="stylesheet"
+        type="text/css" />
     <link rel="shortcut icon" href="<?= base_url('assets/'); ?>images/favicon.ico">
 
     <!-- Select2 CSS -->
@@ -31,7 +35,8 @@
     <link href="<?= base_url('assets/'); ?>plugins/custombox/dist/custombox.min.css" rel="stylesheet">
 
     <!-- Date Picker css -->
-    <link href="<?= base_url('assets/'); ?>plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" rel="stylesheet">
+    <link href="<?= base_url('assets/'); ?>plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css"
+        rel="stylesheet">
     <link href="<?= base_url('assets/'); ?>plugins/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
 
     <!-- Sweet Alert css -->
@@ -46,18 +51,10 @@
 
     <script src="<?= base_url('assets/'); ?>js/modernizr.min.js"></script>
 
-    <!-- jQuery  -->
-    <script src="<?= base_url('assets/'); ?>js/jquery.min.js"></script>
-    <script src="<?= base_url('assets/'); ?>js/popper.min.js"></script>
-    <script src="<?= base_url('assets/'); ?>js/bootstrap.min.js"></script>
-    <script src="<?= base_url('assets/'); ?>js/waves.js"></script>
-    <script src="<?= base_url('assets/'); ?>js/jquery.slimscroll.js"></script>
+    <!-- form Uploads -->
+    <link href="<?= base_url('assets/'); ?>plugins/fileuploads/css/dropify.min.css" rel="stylesheet" type="text/css" />
 
-    <!-- App js -->
-    <script src="<?= base_url('assets/'); ?>js/jquery.core.js"></script>
-    <script src="<?= base_url('assets/'); ?>js/jquery.app.js"></script>
-    <!-- Sweet Alert Js  -->
-    <script src="<?= base_url('assets/'); ?>plugins/sweet-alert/sweetalert2.min.js"></script>
+
 
 </head>
 
@@ -123,14 +120,16 @@
                         </li>
 
                         <li class="dropdown notification-list">
-                            <a class="nav-link dropdown-toggle waves-effect waves-light nav-user" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                                <img src="<?= base_url('assets/images/users/'.$user['image']);?>" alt="user" class="rounded-circle">
+                            <a class="nav-link dropdown-toggle waves-effect waves-light nav-user" data-toggle="dropdown"
+                                href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                                <img src="<?= base_url('assets/images/users/' . $user['image']); ?>" alt="user"
+                                    class="rounded-circle">
                             </a>
                             <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
 
                                 <!-- item-->
                                 <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                    <i class="ti-user m-r-5"></i><?= $user['nama_user'];?>
+                                    <i class="ti-user m-r-5"></i><?= $user['nama_user']; ?>
                                 </a>
 
                                 <!-- item-->
@@ -175,7 +174,7 @@
                                 <li><a href="ui-buttons.html">Surat Masuk</a></li>
                                 <li><a href="ui-cards.html">Surat Keluar</a></li>
                                 <hr>
-                                <li><a href="<?= base_url('Surat/Nota_Dinas');?> ">Nota Dinas</a></li>
+                                <li><a href="<?= base_url('Surat/Nota_Dinas'); ?> ">Nota Dinas</a></li>
                             </ul>
                         </li>
                     </ul>

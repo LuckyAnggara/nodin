@@ -71,6 +71,4 @@
     </div>
 </div>
 <!-- /Right-bar -->
-
 </div>
-<!-- end wrapper -->
