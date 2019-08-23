@@ -131,6 +131,7 @@
                                 <a href="javascript:void(0);" class="dropdown-item notify-item">
                                     <i class="ti-user m-r-5"></i><?= $user['nama_user']; ?>
                                 </a>
+                                <p id="namaUserComment" hidden><?php echo $user['nama_user']; ?></p>
 
                                 <!-- item-->
                                 <a href="javascript:void(0);" class="dropdown-item notify-item">
@@ -143,7 +144,7 @@
                                 </a>
 
                                 <!-- item-->
-                                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                <a href="<?= base_url('login/logout'); ?>" class="dropdown-item notify-item">
                                     <i class="ti-power-off m-r-5"></i> Logout
                                 </a>
 

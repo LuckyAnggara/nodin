@@ -15,7 +15,8 @@ class Surat extends CI_Controller
 
     public function Nota_Dinas()
     {
-        $data['user'] = $this->modelUser->getDataUser('PHP');
+        $user = $this->session->userdata('id_user');
+        $data['user'] = $this->modelUser->getDataUser($user);
         $this->load->view('Templates/topbar.php', $data);
         $this->load->view('Surat/Nota Dinas/index.php');
         $this->load->view('Templates/rightbar.php');
@@ -26,9 +27,10 @@ class Surat extends CI_Controller
 
     public function Nodin_Detail($id)
     {
-        $data['user'] = $this->modelUser->getDataUser('PHP');
+        $user = $this->session->userdata('id_user');
+        $data['user'] = $this->modelUser->getDataUser($user);
         $data['detail'] = $this->modelData->getDetailNodin($id);
-        $cek = $this->modelData->isTujuan($data['detail']['id_no_surat'], $data['user']['id_user']);
+        $cek = $this->modelData->isTujuan($data['detail']['id_no_surat'], $data['user']['id_user'], $data['user']['nama_user']);
         if ($cek == 1) {
             $data['comment'] = $this->getDataComment($data['detail']['comment']);
             $this->load->view('Templates/topbar.php', $data);
@@ -176,6 +178,12 @@ class Surat extends CI_Controller
         echo $result;
     }
 
-    function sendData()
-    { }
+    function sendData($id)
+    {
+        $this->modelData->MsendData($id);
+    }
+    function convertString($id)
+    {
+        $this->modelData->convertToString($id);
+    }
 }

@@ -110,6 +110,7 @@ $(document).ready(function() {
                 //     '<span title="'+data+'">'+data.substr( 0, 28 )+'...</span>' :
                 //     data;
                 // },
+
                 targets: 4,
                 render: function(data, type, full, meta) {
                     var str = data.split('\n');

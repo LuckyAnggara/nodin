@@ -138,7 +138,12 @@ class ModelData extends CI_Model
         $nomor = $this->cekLastNodin();
         $noSurat = $nomor['nosurat_nodin'] + 1;
         $post = $this->input->post();
-        $keNodin = implode(',', $post['tujuan']);
+
+        // foreach ($post['tujuan'] as $key => $value) {
+        //     $data = $this->_convertTujuan($value);
+        //     $keNodin[] = $data;
+        // }
+        $keNodin = implode(',',  $post['tujuan']);
         $data = [
             'nosurat_nodin' => $noSurat,
             'dari_nodin' => $post["asal"],
@@ -148,6 +153,15 @@ class ModelData extends CI_Model
             'date_created' => date("Y-m-d H:i:s"),
         ];
         $this->db->insert('nodin', $data);
+    }
+
+    private function _convertTujuan($nama)
+    {
+        $this->db->select('*');
+        $this->db->from('tujuanintern');
+        $this->db->where('nama', $nama);
+        $data = $this->db->get()->row_array();
+        return $data['id'];
     }
 
     public function editDataNodin()
@@ -227,13 +241,50 @@ class ModelData extends CI_Model
         $this->db->update('detail');
     }
 
-    public function isTujuan($id, $user)
+    public function isTujuan($id, $idUser, $namaUser)
     {
+        // cek User Pengirim
         $this->db->select('*');
         $this->db->where('id_nodin', $id);
         $data = $this->db->get('nodin')->row_array();
-        if ($data['dari_nodin'] == $user) {
-            return "1";
+        // cek User Viewer
+        // tahap 2 cek User Viewer
+        $this->db->select('*');
+        $this->db->where('id_nodin', $id);
+        $data2 = $this->db->get('nodin')->row_array();
+        $data3 = explode(',', $data2['ke_nodin']);
+        // tahap 3 cek Status Kirim
+        $this->db->select('*');
+        $this->db->where('id_no_surat', $id);
+        $data4 = $this->db->get('detail')->row_array();
+        foreach ($data3 as $key => $value) {
+            if ($value == $namaUser) {
+                echo $value;
+                //$i = $i + 1;
+            }
+        }
+        // // lanjut
+        // if ($data4['status'] == 1) {
+        //     if ($i == 1) {
+        //         $data5 =     "1";
+        //     } else {
+        //         $data5 =    "0";
+        //     }
+        // } else {
+        //     if ($data['dari_nodin'] == $idUser) {
+        //         $data5 =    "1";
+        //     } else {
+        //         $data5 =     "0";
+        //     }
+        // }
+        // return $data5;
+
+        if ($data['dari_nodin'] == $idUser || $i == 1) {
+            if ($data4['status'] == 1 && $i == 1) {
+                return "1";
+            } else {
+                return "1";
+            }
         } else {
             return "0";
         }
@@ -242,6 +293,7 @@ class ModelData extends CI_Model
     function simpan_uploadLampiran($id, $lampiran)
     {
         $this->db->set('lampiran', $lampiran);
+        $this->db->set('date_upload', date("Y-m-d H:i:s"));
         $this->db->where('id_no_surat', $id);
         $this->db->update('detail');
     }
@@ -252,5 +304,23 @@ class ModelData extends CI_Model
         $this->db->from('nodin');
         $this->db->where('nosurat_nodin', $idSurat);
         return $this->db->get()->row_array();
+    }
+
+    public function MsendData($idSurat)
+    {
+        $this->db->set('status', '1');
+        $this->db->set('date_kirim', date("Y-m-d H:i:s"));
+        $this->db->where('id_no_surat', $idSurat);
+        $this->db->update('detail');
+    }
+
+
+    public function convertToString($id)
+    {
+        $this->db->select('*');
+        $this->db->from('tujuanintern');
+        $this->db->where('id', $id);
+        $data = $this->db->get()->row_array();
+        return $data;
     }
 }

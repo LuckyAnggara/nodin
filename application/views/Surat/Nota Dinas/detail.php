@@ -135,7 +135,7 @@
                                         src="<?= base_url('assets/images/users/' . $user['image']); ?>"> </a>
                             </div>
                             <!-- dipake buat parsing variabel id_user ke javascript -->
-                            <p id="namaUserComment" hidden><?php echo $user['id_user']; ?></p>
+                            <p id="idUserComment" hidden><?php echo $user['id_user']; ?></p>
                             <!-- END -->
                             <div class="media-body">
                                 <textarea id="commentPost" rows="1" class="form-control"
